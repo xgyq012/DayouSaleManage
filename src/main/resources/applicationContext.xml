@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.3.xsd
+       http://www.springframework.org/schema/data/jpa
+	   http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+    <context:property-placeholder
+            ignore-resource-not-found="true" location="classpath*:application.properties" />
+
+
+    <context:component-scan base-package="com.dy.*,com.springmvc.*" />
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${c3p0.driverClass}" />
+        <property name="jdbcUrl" value="${c3p0.jdbcUrl}" />
+        <property name="user" value="${c3p0.user}" />
+        <property name="password" value="${c3p0.password}" />
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+        <property name="minPoolSize" value="${c3p0.minPoolSize}" />
+        <property name="checkoutTimeout" value="${c3p0.checkoutTimeout}" />
+        <property name="maxStatements" value="${c3p0.maxStatements}" />
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}" />
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
+    </bean>
+
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.dy.sale.domain" />
+        <property name="mappingResources" value="orm.xml" />
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.query.substitutions" value="true 1, false 0" />
+                <entry key="hibernate.default_batch_fetch_size" value="16" />
+                <entry key="hibernate.max_fetch_depth" value="2" />
+                <entry key="hibernate.generate_statistics" value="true" />
+                <entry key="hibernate.bytecode.use_reflection_optimizer" value="true" />
+                <entry key="hibernate.cache.use_second_level_cache" value="false" />
+                <entry key="hibernate.cache.use_query_cache" value="false" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="hibernateJpaVendorAdapter"
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="MYSQL" />
+        <property name="databasePlatform">
+            <bean factory-method="getDialect"
+                  class="com.gdgxwl.orm.core.HibernateUtil">
+                <constructor-arg ref="dataSource" />
+            </bean>
+        </property>
+        <property name="showSql" value="true" />
+        <property name="generateDdl" value="false" />
+    </bean>
+
+    <!-- Jpa Entity Manager 配置 -->
+
+    <!-- Jpa 事务配置 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <jpa:repositories base-package="com.dy.*.repository"
+                      factory-class="com.gdgxwl.orm.core.CustomRepositoryFactoryBean"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager" />
+
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <task:annotation-driven />
+
+
+</beans>
