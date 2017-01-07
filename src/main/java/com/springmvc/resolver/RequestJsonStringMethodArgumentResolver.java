@@ -23,6 +23,7 @@ import java.util.Collection;
 public class RequestJsonStringMethodArgumentResolver extends
         RequestParamMethodArgumentResolver {
 
+    private final static String APPLICATION_FORM_URLENCODED_VALUE_UTF8 = "application/x-www-form-urlencoded; charset=UTF-8";
 
     public RequestJsonStringMethodArgumentResolver() {
         super(true);
@@ -40,12 +41,18 @@ public class RequestJsonStringMethodArgumentResolver extends
 
         Object obj = null;
 
+        String argumentName = parameter.getParameterAnnotation(JsonArgument.class).value();
+
+        if(StringUtils.isNotEmpty(argumentName)){
+            name = argumentName;
+        }
+
         String[] paramValues = webRequest.getParameterValues(name);
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String application_type = request.getContentType();
 
-        if(StringUtils.containsAny(application_type, MediaType.APPLICATION_FORM_URLENCODED_VALUE)){
+        if(application_type.equals(MediaType.APPLICATION_FORM_URLENCODED_VALUE) || application_type.startsWith(MediaType.APPLICATION_FORM_URLENCODED_VALUE)){
 
             if(paramValues!=null && paramValues.length==1){
                 String value = paramValues[0];
