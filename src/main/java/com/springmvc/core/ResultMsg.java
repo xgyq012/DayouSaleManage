@@ -5,11 +5,28 @@ package com.springmvc.core;
  */
 public class ResultMsg {
 
-    private Object data;
+    private Object data=null;
 
-    private String msg;
+    private String msg="操作成功";
 
-    private String status;
+    private String status="0";
+
+    public ResultMsg(){}
+
+    public ResultMsg(String msg,String status,Object data){
+        this.msg = msg;
+        this.status=status;
+        this.data = data;
+    }
+
+    public ResultMsg(String msg , String status){
+        this.status=status;
+        this.msg = msg;
+    }
+
+    public ResultMsg(Object data){
+        this.data = data;
+    }
 
     public Object getData() {
         return data;

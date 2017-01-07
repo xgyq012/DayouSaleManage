@@ -1,5 +1,6 @@
 package com.springmvc.view;
 
+import com.springmvc.util.JsonUtil;
 import org.springframework.web.servlet.view.AbstractView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class JsonView extends AbstractView {
 
         try {
             PrintWriter writer = response.getWriter();
-            //writer.write(JsonUtil.getObjectMapper().writeValueAsString(model.get("person")));
+            writer.write(JsonUtil.getObjectMapper().writeValueAsString(model.get("result")));
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();

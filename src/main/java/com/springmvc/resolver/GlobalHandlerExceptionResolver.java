@@ -1,6 +1,8 @@
 package com.springmvc.resolver;
 
+import com.springmvc.core.ResultMsg;
 import com.springmvc.exception.SuperException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,11 +21,14 @@ public class GlobalHandlerExceptionResolver implements HandlerExceptionResolver 
     public ModelAndView resolveException(HttpServletRequest request,
                                          HttpServletResponse response, Object handler, Exception exception) {
 
-            ModelAndView modelAndView = null;
+            ModelAndView modelAndView = new ModelAndView("jsonView");
 
            if(exception instanceof SuperException){
-               SuperException supes = (SuperException) exception;
-               modelAndView = new ModelAndView("jsonView");
+               SuperException supers = (SuperException) exception;
+               modelAndView.getModel().put("result",supers.getResultMsg());
+           }else{
+               ResultMsg msg = new ResultMsg("系统出错","-1");
+               modelAndView.getModel().put("result",msg);
            }
 
         return modelAndView;
