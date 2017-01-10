@@ -90,6 +90,8 @@
                 theme        : 'green' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
             })
 
+
+
         })
 
     </script>
@@ -132,12 +134,37 @@
                 </div>
                 <div id="bjui-sidenav-box">
                     <ul class="nav">
-                        <li class=""><a href="javascript:;" class="right-arrow"><i class="fa fa-caret-right"></i>&nbsp;综合应用<b><i
+                        <li class=""><a href="javascript:;" class="right-arrow"><i class="fa fa-caret-right"></i>&nbsp;表单相关<b><i
                                 class="fa fa-angle-right"></i></b></a>
-                            <ul class="nav" style="display: none;">
-                                <li class="navtab-base-demo-form"><a href="html/form/form.html" data-toggle="navtab"
-                                                                     data-options="{id:'base-demo-form', title:'表单示例'}"><i
-                                        class="fa fa-caret-right"></i>&nbsp;表单示例</a></li>
+                            <ul class="nav" style="display: block;">
+                                <li class="navtab-base-button"><a href="http://www.baidu.com" data-toggle="navtab"
+                                                                  data-options="{id:'base-button', title:'按钮'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;按钮</a></li>
+                                <li class="navtab-base-input"><a href="/dayou/main/commodityType" data-toggle="navtab"
+                                                                 data-options="{id:'base-input', title:'文本框'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;文本框</a></li>
+                                <li class="navtab-base-select"><a href="html/form/select.html" data-toggle="navtab"
+                                                                  data-options="{id:'base-select', title:'下拉选择框'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;下拉选择框</a></li>
+                                <li class="navtab-base-checkbox"><a href="html/form/checkbox.html" data-toggle="navtab"
+                                                                    data-options="{id:'base-checkbox', title:'单选、复选框'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;单选、复选框</a></li>
+                                <li class="navtab-base-datepicker"><a href="html/form/datepicker.html"
+                                                                      data-toggle="navtab"
+                                                                      data-options="{id:'base-datepicker', title:'日期选择器'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;日期选择器</a></li>
+                                <li class="navtab-base-tags"><a href="html/form/tags.html" data-toggle="navtab"
+                                                                data-options="{id:'base-tags', title:'Tags、自动完成'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;Tags、自动完成</a></li>
+                                <li class="navtab-base-suggest"><a href="html/form/suggest.html" data-toggle="navtab"
+                                                                   data-options="{id:'base-suggest', title:'Suggest'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;Suggest</a></li>
+                                <li class="navtab-base-findgrid"><a href="html/form/findgrid.html" data-toggle="navtab"
+                                                                    data-options="{id:'base-findgrid', title:'FindGrid'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;FindGrid</a></li>
+                                <li class="navtab-base-spinner"><a href="html/form/spinner.html" data-toggle="navtab"
+                                                                   data-options="{id:'base-spinner', title:'Spinner'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;Spinner</a></li>
                             </ul>
                         </li>
                     </ul>
