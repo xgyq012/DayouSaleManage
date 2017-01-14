@@ -13,6 +13,11 @@ public class ResultMsg {
 
     public ResultMsg(){}
 
+    public ResultMsg(String msg,Object data){
+        this.msg = msg;
+        this.data = data;
+    }
+
     public ResultMsg(String msg,String status,Object data){
         this.msg = msg;
         this.status=status;

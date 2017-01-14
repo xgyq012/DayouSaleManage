@@ -20,6 +20,9 @@
     <link href="${ctx}/resources/js/B-JUI/plugins/bootstrapSelect/bootstrap-select.css" rel="stylesheet">
     <link href="${ctx}/resources/js/B-JUI/plugins/webuploader/webuploader.css" rel="stylesheet">
     <link href="${ctx}/resources/js/B-JUI/themes/css/FA/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="${ctx}/resources/css/index.css" rel="stylesheet">
+
     <!-- Favicons -->
    <%-- <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-precomposed.png">
     <link rel="shortcut icon" href="assets/ico/favicon.png">--%>
@@ -70,17 +73,20 @@
     <script src="${ctx}/resources/js/B-JUI/plugins/uploadify/scripts/jquery.uploadify.min.js"></script>
     <script src="${ctx}/resources/js/B-JUI/plugins/download/jquery.fileDownload.js"></script>
 
+    <script src="${ctx}/resources/js/B-JUI/form.js"></script>
+
     <script type="text/javascript">
         $(function() {
             BJUI.init({
                 JSPATH       : 'B-JUI/',         //[可选]框架路径
                 PLUGINPATH   : '${ctx}/resources/js/B-JUI/plugins/', //[可选]插件路径
                 //  loginInfo    : {url:'login_timeout.html', title:'登录', width:440, height:240}, // 会话超时后弹出登录对话框
-                statusCode   : {ok:200, error:300, timeout:301}, //[可选]
+                statusCode   : {ok:0, error:-1, timeout:301}, //[可选]
                 ajaxTimeout  : 300000, //[可选]全局Ajax请求超时时间(毫秒)
                 alertTimeout : 3000,  //[可选]信息提示[info/correct]自动关闭延时(毫秒)
                 //pageInfo     : {total:'totalRow', pageCurrent:'pageCurrent', pageSize:'pageSize', orderField:'orderField', orderDirection:'orderDirection'}, //[可选]分页参数
-                keys         : {statusCode:'statusCode', message:'message'}, //[可选]
+                alertMsg     : {displayPosition:'topcenter', displayMode:'slide', alertTimeout:3000},
+                keys         : {statusCode:'status', message:'msg'}, //[可选]
                 ui           : {
                     sidenavWidth     : 220,
                     showSlidebar     : true, //[可选]左侧导航栏锁定/隐藏
@@ -90,9 +96,19 @@
                 theme        : 'green' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
             })
 
+        });
 
 
-        })
+        // 满屏开关
+        var bjui_index_container = 'container_fluid'
+
+        function bjui_index_exchange() {
+            bjui_index_container = bjui_index_container == 'container_fluid' ? 'container' : 'container_fluid'
+
+            $('#bjui-top').find('> div').attr('class', bjui_index_container)
+            $('#bjui-navbar').find('> div').attr('class', bjui_index_container)
+            $('#bjui-body-box').find('> div').attr('class', bjui_index_container)
+        }
 
     </script>
 
@@ -100,7 +116,7 @@
 <body>
 
 <div id="bjui-top" class="bjui-header">
-    <div class="container_fluid">
+    <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapsenavbar" data-target="#bjui-top-collapse" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -109,10 +125,15 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
+        <nav class="collapse navbar-collapse" id="bjui-top-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="javascript:;" onclick="bjui_index_exchange()" title="横向收缩/充满屏幕"><i class="fa fa-exchange"></i></a></li>
+            </ul>
+        </nav>
     </div>
 </div>
 <header class="navbar bjui-header" id="bjui-navbar">
-    <div class="container_fluid">
+    <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" id="bjui-navbar-collapsebtn" data-toggle="collapsenavbar" data-target="#bjui-navbar-collapse" aria-expanded="false">
                 <i class="fa fa-angle-double-right"></i>
@@ -126,7 +147,7 @@
     </div>
 </header>
 <div id="bjui-body-box">
-    <div class="container_fluid" id="bjui-body">
+    <div class="container" id="bjui-body">
         <div id="bjui-sidenav-col">
             <div id="bjui-sidenav">
                 <div id="bjui-sidenav-arrow" data-toggle="tooltip" data-placement="left" data-title="隐藏左侧菜单">
@@ -140,7 +161,7 @@
                                 <li class="navtab-base-button"><a href="http://www.baidu.com" data-toggle="navtab"
                                                                   data-options="{id:'base-button', title:'按钮'}"><i
                                         class="fa fa-caret-right"></i>&nbsp;按钮</a></li>
-                                <li class="navtab-base-input"><a href="/dayou/main/commodityType" data-toggle="navtab"
+                                <li class="navtab-base-input"><a href="${ctx}/main/commodityType" data-toggle="navtab"
                                                                  data-options="{id:'base-input', title:'文本框'}"><i
                                         class="fa fa-caret-right"></i>&nbsp;文本框</a></li>
                                 <li class="navtab-base-select"><a href="html/form/select.html" data-toggle="navtab"

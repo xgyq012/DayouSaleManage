@@ -1,16 +1,95 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div style="padding-right: 10px" class="container-fluid">
-<div class="row">
-    <div class="col-md-3">
-        <ul id="tree" class="ztree" style="overflow:auto;"></ul>
-    </div>
-    <div style="border: 1px solid" class="col-md-9">.col-md-8</div>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+<%@ include file="/WEB-INF/views/common/common.jsp" %>
+
+
+
+<div class="bjui-pageHeader bjui-pageTool">
+    <ul>
+        <li><button type="button" class="btn-default" data-icon="add" onclick="formController.add()">新增</button></li>
+        <li><button type="button" class="btn-default" data-icon="save" onclick="formController.save()">保存</button></li>
+        <li><button  type="button" class="btn-red" data-icon="fa-remove" onclick="formController.del()">删除</button></li>
+    </ul>
 </div>
+
+<div class="bjui-pageContent" >
+
+    <div style="float:left; width:230px;">
+        <ul id="tree" class="ztree" style="overflow:auto;height: 99.9%"></ul>
     </div>
+    <div style="margin-left:240px; height:99.9%; overflow:hidden;">
+        <form   id="j_custom_form" >
+            <input type="hidden" name="id" value="">
+            <input type="hidden" name="fullpath" value="">
+            <input type="hidden" name="createTime" value="">
+            <div class="bjui-row col-2">
+                <label class="row-label">上级名称</label>
+                <div class="row-input">
+                    <input type="hidden" name="parentResourceId" value="" >
+                    <input type="text" name="parentResourceName" value="" >
+                </div>
+                <label class="row-label">资源编码</label>
+                <div class="row-input required">
+                    <input type="text" name="resourceCode" value="" data-rule="required">
+                </div>
+                <label class="row-label">资源名称</label>
+                <div class="row-input required">
+                    <input type="text" name="resourceName" value="" data-rule="required" >
+                </div>
+                <label class="row-label">资源标题</label>
+                <div class="row-input required">
+                    <input type="text" name="resourceLabel" value="" data-rule="required" >
+                </div>
+                <label class="row-label">图标路径</label>
+                <div class="row-input">
+                    <input type="text" name="imagePath" value="" >
+                </div>
+                <label class="row-label">显示顺序</label>
+                <div class="row-input ">
+                    <input type="text" name="seq" value="" >
+                </div>
+                <label class="row-label">URL地址</label>
+                <div class="row-input">
+                    <input type="text" name="url" value="" >
+                </div>
+                <label class="row-label">是否有效</label>
+                <div class="row-input required">
+                    <select name="enable" data-toggle="selectpicker" data-rule="required" data-width="100%">
+                        <option selected value="Y">有效</option>
+                        <option value="N">无效</option>
+                    </select>
+                </div>
+                <label class="row-label">资源类型</label>
+                <div class="row-input required">
+                    <select name="resourceType" data-toggle="selectpicker" data-rule="required" data-width="100%">
+                        <option selected value="menu">菜单</option>
+                        <option value="button">按钮</option>
+                        <option value="module">模块</option>
+                    </select>
+                </div>
+                <br>
+                <label class="row-label">资源描述</label>
+                <div class="row-input">
+                    <textarea name="resourceDesc"  data-toggle="autoheight" cols="52" rows="5"></textarea>
+                </div>
+                <br>
+                <label class="row-label">备注</label>
+                <div class="row-input">
+                    <textarea name="remark"  data-toggle="autoheight" cols="52" rows="5"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script>
 
+    var config= {
+        ctx : '${ctx}',
+        formId:"#j_custom_form"
+    }
+
     var zTree;
-    var demoIframe;
 
     var setting = {
         view: {
@@ -19,64 +98,93 @@
             selectedMulti: false
         },
         data: {
+            key: {
+                name: "resourceName"
+            },
             simpleData: {
                 enable:true,
                 idKey: "id",
-                pIdKey: "pId",
+                pIdKey: "parentResourceId",
                 rootPId: ""
             }
         },
         callback: {
             beforeClick: function(treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("tree");
-                if (treeNode.isParent) {
-                    zTree.expandNode(treeNode);
-                    return false;
-                } else {
-                    demoIframe.attr("src",treeNode.file + ".html");
-                    return true;
-                }
+                var id = treeNode.id;
+                BJUI.ajax('doajax', {
+                    url: config.ctx + '/resource/get/' + id,
+                    loadingmask: true,
+                    okCallback: function(json, options) {
+                        setform(config.formId,json)
+                    }
+                })
+
             }
         }
     };
 
-    var zNodes =[
-        {id:1, pId:0, name:"[core] 基本功能 演示", open:true},
-        {id:101, pId:1, name:"最简单的树 --  标准 JSON 数据", file:"core/standardData"},
-        {id:102, pId:1, name:"最简单的树 --  简单 JSON 数据", file:"core/simpleData"},
-        {id:103, pId:1, name:"不显示 连接线", file:"core/noline"},
-        {id:104, pId:1, name:"不显示 节点 图标", file:"core/noicon"},
-        {id:105, pId:1, name:"自定义图标 --  icon 属性", file:"core/custom_icon"},
-        {id:106, pId:1, name:"自定义图标 --  iconSkin 属性", file:"core/custom_iconSkin"},
-        {id:107, pId:1, name:"自定义字体", file:"core/custom_font"},
-        {id:115, pId:1, name:"超链接演示", file:"core/url"},
-        {id:108, pId:1, name:"异步加载 节点数据", file:"core/async"},
-        {id:109, pId:1, name:"用 zTree 方法 异步加载 节点数据", file:"core/async_fun"},
-        {id:110, pId:1, name:"用 zTree 方法 更新 节点数据", file:"core/update_fun"},
-        {id:111, pId:1, name:"单击 节点 控制", file:"core/click"},
-        {id:112, pId:1, name:"展开 / 折叠 父节点 控制", file:"core/expand"},
-        {id:113, pId:1, name:"根据 参数 查找 节点", file:"core/searchNodes"},
-        {id:114, pId:1, name:"其他 鼠标 事件监听", file:"core/otherMouse"},
-
-        {id:2, pId:0, name:"[excheck] 复/单选框功能 演示", open:false},
-        {id:201, pId:2, name:"Checkbox 勾选操作", file:"excheck/checkbox"},
-        {id:206, pId:2, name:"Checkbox nocheck 演示", file:"excheck/checkbox_nocheck"},
-        {id:207, pId:2, name:"Checkbox chkDisabled 演示", file:"excheck/checkbox_chkDisabled"},
-        {id:208, pId:2, name:"Checkbox halfCheck 演示", file:"excheck/checkbox_halfCheck"},
-        {id:202, pId:2, name:"Checkbox 勾选统计", file:"excheck/checkbox_count"},
-        {id:203, pId:2, name:"用 zTree 方法 勾选 Checkbox", file:"excheck/checkbox_fun"},
-        {id:204, pId:2, name:"Radio 勾选操作", file:"excheck/radio"},
-        {id:209, pId:2, name:"Radio nocheck 演示", file:"excheck/radio_nocheck"},
-        {id:210, pId:2, name:"Radio chkDisabled 演示", file:"excheck/radio_chkDisabled"},
-        {id:211, pId:2, name:"Radio halfCheck 演示", file:"excheck/radio_halfCheck"},
-        {id:205, pId:2, name:"用 zTree 方法 勾选 Radio", file:"excheck/radio_fun"}
-    ];
 
     $(document).ready(function(){
+
         var t = $("#tree");
-        t = $.fn.zTree.init(t, setting, zNodes);
-        var zTree = $.fn.zTree.getZTreeObj("tree");
-        zTree.selectNode(zTree.getNodeByParam("id", 101));
+
+        $.ajax({
+            type: 'post',
+            url: config.ctx +'/resource/getMenu',
+            success: function (result) {
+                if(status==0){
+                    t = $.fn.zTree.init(t, setting,result.data);
+                }
+                zTree = $.fn.zTree.getZTreeObj("tree");
+            },
+            error: function (msg) {
+                alert(" 数据加载失败！" + msg);
+            }
+        });
+
     });
+
+    var formController = {
+
+        add :function () {
+            clearForm(config.formId);
+        },
+
+        save:function () {
+            BJUI.ajax('ajaxform', {
+                url: config.ctx + '/resource/save',
+                type:"post",
+                form: $.CurrentNavtab.find("#j_custom_form"),
+                validate: true,
+                loadingmask: true,
+                okCallback: function(json, options) {
+                    console.log(JSON.stringify(json));
+                }
+            });
+        },
+
+        del:function () {
+            var nodes = zTree.getSelectedNodes()[0];
+            if(nodes){
+                BJUI.alertmsg('confirm', '确认删除？', {
+                    okCall: function() {
+                        BJUI.ajax('doajax', {
+                            url: config.ctx + "/resource/del/"+nodes.id,
+                            okCallback: function(json, options) {
+                               if(json.status==0){
+                                   zTree.removeNode(nodes);
+                               }
+                            }
+                        })
+                    }
+                })
+            }else{
+                BJUI.alertmsg('warn', '请选择删除的信息！',{autoClose:true});
+            }
+        }
+
+    }
+
+
 
 </script>

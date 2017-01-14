@@ -42,8 +42,8 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="com.dy.sale.domain" />
-        <property name="mappingResources" value="orm.xml" />
+        <property name="packagesToScan" value="com.dy.*.domain" />
+        <property name="mappingResources" value="META-INF/orm.xml" />
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
         <property name="jpaPropertyMap">
             <map>

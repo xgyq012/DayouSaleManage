@@ -2,6 +2,7 @@ package com.springmvc.resolver;
 
 import com.springmvc.core.ResultMsg;
 import com.springmvc.exception.SuperException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,9 +28,15 @@ public class GlobalHandlerExceptionResolver implements HandlerExceptionResolver 
                SuperException supers = (SuperException) exception;
                modelAndView.getModel().put("result",supers.getResultMsg());
            }else{
-               ResultMsg msg = new ResultMsg("系统出错","-1");
+               String message = exception.getMessage();
+               if(StringUtils.isBlank(message)){
+                   message =  "系统出错";
+               }
+               ResultMsg msg = new ResultMsg(message,"-1");
                modelAndView.getModel().put("result",msg);
            }
+
+        exception.printStackTrace();
 
         return modelAndView;
     }
