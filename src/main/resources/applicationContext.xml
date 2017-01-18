@@ -78,10 +78,16 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
+    <bean id="auditorAwareImpl" class="com.dy.base.core.AuditorAwareImpl"/>
+
+
+
     <jpa:repositories base-package="com.dy.*.repository"
                       factory-class="com.gdgxwl.orm.core.CustomRepositoryFactoryBean"
                       entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager" />
+
+    <jpa:auditing auditor-aware-ref="auditorAwareImpl"/>
 
 
     <tx:annotation-driven transaction-manager="transactionManager" />

@@ -31,11 +31,6 @@ public class GxwlSysResourceController {
 		return "base/resource/resource";
 	}
 
-  /*  @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    }*/
 
 	// 加载资源
 	@RequestMapping(value = "/get/{id}")

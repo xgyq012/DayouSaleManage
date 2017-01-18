@@ -84,7 +84,7 @@
                 statusCode   : {ok:0, error:-1, timeout:301}, //[可选]
                 ajaxTimeout  : 300000, //[可选]全局Ajax请求超时时间(毫秒)
                 alertTimeout : 3000,  //[可选]信息提示[info/correct]自动关闭延时(毫秒)
-                //pageInfo     : {total:'totalRow', pageCurrent:'pageCurrent', pageSize:'pageSize', orderField:'orderField', orderDirection:'orderDirection'}, //[可选]分页参数
+                pageInfo     : {total:'total', pageCurrent:'page', pageSize:'rows', orderField:'orderField', orderDirection:'orderDirection'}, //[可选]分页参数
                 alertMsg     : {displayPosition:'topcenter', displayMode:'slide', alertTimeout:3000},
                 keys         : {statusCode:'status', message:'msg'}, //[可选]
                 ui           : {
@@ -158,15 +158,15 @@
                         <li class=""><a href="javascript:;" class="right-arrow"><i class="fa fa-caret-right"></i>&nbsp;表单相关<b><i
                                 class="fa fa-angle-right"></i></b></a>
                             <ul class="nav" style="display: block;">
-                                <li class="navtab-base-button"><a href="http://www.baidu.com" data-toggle="navtab"
-                                                                  data-options="{id:'base-button', title:'按钮'}"><i
-                                        class="fa fa-caret-right"></i>&nbsp;按钮</a></li>
-                                <li class="navtab-base-input"><a href="${ctx}/main/commodityType" data-toggle="navtab"
-                                                                 data-options="{id:'base-input', title:'文本框'}"><i
-                                        class="fa fa-caret-right"></i>&nbsp;文本框</a></li>
-                                <li class="navtab-base-select"><a href="html/form/select.html" data-toggle="navtab"
-                                                                  data-options="{id:'base-select', title:'下拉选择框'}"><i
-                                        class="fa fa-caret-right"></i>&nbsp;下拉选择框</a></li>
+                                <li class="navtab-base-button"><a href="${ctx}/saleGoodsType/list" data-toggle="navtab"
+                                                                  data-options="{id:'sale-goodsType', title:'商品类型'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;商品类型</a></li>
+                                <li class="navtab-base-input"><a href="${ctx}/resource/list" data-toggle="navtab"
+                                                                 data-options="{id:'base-resource', title:'资源管理'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;资源管理</a></li>
+                                <li class="navtab-base-select"><a href="${ctx}/goods/list" data-toggle="navtab"
+                                                                  data-options="{id:'sale-goods', title:'商品信息'}"><i
+                                        class="fa fa-caret-right"></i>&nbsp;商品信息</a></li>
                                 <li class="navtab-base-checkbox"><a href="html/form/checkbox.html" data-toggle="navtab"
                                                                     data-options="{id:'base-checkbox', title:'单选、复选框'}"><i
                                         class="fa fa-caret-right"></i>&nbsp;单选、复选框</a></li>
@@ -236,7 +236,11 @@
 </div>
 <script type="text/javascript">
 
+var GlobalConfig= {
 
+    ctx : '${ctx}'
+
+}
 
 </script>
 </body>

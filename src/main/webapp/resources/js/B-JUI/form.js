@@ -81,14 +81,16 @@ function formDisable($form,disabled){
 
 function clearForm(formId){
     var $form = $.CurrentNavtab.find(formId);
-    $form.find(":input").val("");
     $form.find(":radio,:checkbox").each(function (){
         $(this).iCheck("uncheck");
     });
     $form.find("select").each(function () {
         $(this).selectpicker('deselectAll');
+        $(this).selectpicker('refresh');
+        $(this).selectpicker('val', '');
     });
     $form.find("input[data-toggle='datepicker']").each(function () {
             $(this).datepicker({minDate:''});
     });
+    $form.find(":input").val("");
 }
