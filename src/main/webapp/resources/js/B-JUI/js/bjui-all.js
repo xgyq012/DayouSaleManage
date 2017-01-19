@@ -7885,9 +7885,16 @@
                 
                 if (!that.$tbody) that.$tbody = $('<tbody></tbody>')
                 if (data) {
-                    if (data.list) list = data.list
-                    else list = data
-                    
+
+                    list = data.list || data.data;
+
+                    if(!list){
+                        list = data;
+                    }
+
+                    /*if (data.list) list = data.list
+                    else list = data*/
+
                     that.paging.total = list.length || 0
                     
                     // for tree

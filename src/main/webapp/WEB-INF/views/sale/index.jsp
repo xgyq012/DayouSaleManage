@@ -41,7 +41,7 @@
     <script src="${ctx}/resources/js/B-JUI/other/jquery.iframe-transport.js"></script>
     <![endif]-->
     <!-- B-JUI -->
-    <script src="${ctx}/resources/js/B-JUI/js/bjui-all.min.js"></script>
+    <script src="${ctx}/resources/js/B-JUI/js/bjui-all.js"></script>
     <!-- plugins -->
     <!-- swfupload for kindeditor -->
     <script src="${ctx}/resources/js/B-JUI/plugins/swfupload/swfupload.js"></script>

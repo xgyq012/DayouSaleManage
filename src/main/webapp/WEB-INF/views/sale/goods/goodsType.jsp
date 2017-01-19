@@ -102,7 +102,7 @@
                             url: ctx + '/saleGoodsType/get/' + id,
                             loadingmask: true,
                             okCallback: function(data, options) {
-                                setform(GoodsType.config.formId,data);
+                                setNavtabform(GoodsType.config.formId,data);
                                 var parentNode =  treeNode.getParentNode()
                                 if(parentNode){
                                     $.CurrentNavtab.find("input[name='parentTypeName']").val(parentNode.typeName);//获取父节点名称
@@ -152,7 +152,7 @@
                     okCallback: function(json, options) {
                         var data = json.data;
                         var typeId = $.CurrentNavtab.find("input[name='typeId']").val();
-                        setform(GoodsType.config.formId,data);
+                        setNavtabform(GoodsType.config.formId,data);
                         if(typeId){
                             var nodes = zTree.getSelectedNodes()[0];
                             for(var a in data){
@@ -162,8 +162,8 @@
                         }else{
                             var parentZNode = zTree.getNodeByParam("typeId", data.parentTypeId, null);
                             zTree.addNodes(parentZNode ,data, true);
-                            var node = zTree.getNodeByTId(data.typeId);
-                            zTree.selectNode(node);
+                           /* var node = zTree.getNodeByTId(data.typeId);
+                            zTree.selectNode(node);*/
                         }
                     }
                 });
@@ -179,6 +179,7 @@
                                 okCallback: function(json, options) {
                                     if(json.status==0){
                                         zTree.removeNode(nodes);
+                                        clearForm(GoodsType.config.formId);
                                     }
                                 }
                             })

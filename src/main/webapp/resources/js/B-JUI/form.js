@@ -1,4 +1,4 @@
-function setform(formId,data) {
+function setNavtabform(formId,data) {
     var $form = $.CurrentNavtab.find(formId);
     // data =  JSON.stringify(data);
     for(var key in data){
@@ -15,6 +15,24 @@ function setform(formId,data) {
         _checkDateField($form, key, val);
     }
 
+}
+
+function setNativeform(formId,data) {
+    var $form = $(formId);
+    // data =  JSON.stringify(data);
+    for(var key in data){
+        var val = data[key];
+        if(!_checkSelectField($form,key,val)){
+            if(!_checkField($form,key,val)){
+                var elem=$form.find("input[name='"+key+"']");
+                if(elem){
+                    elem.val(val);
+                    continue;
+                }
+            }
+        }
+        _checkDateField($form, key, val);
+    }
 }
 
 /**

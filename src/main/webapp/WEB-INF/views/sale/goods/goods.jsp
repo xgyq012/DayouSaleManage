@@ -1,85 +1,95 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=utf-8" language="java" %>
 
 <div class="bjui-pageHeader bjui-pageTool">
     <ul>
-        <li><button type="button" class="btn-default" data-icon="save" onclick="GoodsType.formController.save()">保存</button></li>
-        <li><button type="button" class="btn-red" data-icon="remove" onclick="GoodsType.formController.del()">删除</button></li>
+        <li><button type="button" class="btn-default" data-icon="save" onclick="Goods.formController.save()">保存</button></li>
+        <c:if test="${!empty goodsId}">
+            <li><button type="button" class="btn-red" data-icon="remove" onclick="Goods.formController.del()">删除</button></li>
+        </c:if>
     </ul>
 </div>
 
 <div class="bjui-pageContent" >
         <form id="Goods_form" >
-            <input type="hidden" name="goodsId" value="">
+            <input id="goodsId" type="hidden" name="goodsId" value="${goodsId}">
             <input type="hidden" name="createTime" value="">
+            <input type="hidden" name="fileId" value="">
+
             <div class="bjui-row col-2">
                 <label class="row-label">是否上架</label>
                 <div class="row-input required">
-                    <select name="enable" data-toggle="selectpicker" data-rule="required" data-width="100%">
+                    <select name="" data-toggle="selectpicker" data-rule="required" data-width="100%">
                         <option value=""></option>
-                        <option selected value="Y">可上架</option>
-                        <option value="N">不可上架</option>
+                        <option selected value="Y">已上架</option>
+                        <option value="N">未上架</option>
                     </select>
                 </div>
+                <label class="row-label">类型</label>
+                <div class="row-input" >
+                    <input  type="text" name="goodsType" value="">
+                </div>
                 <label class="row-label">商品名称</label>
-                <div class="row-input">
-                    <input type="hidden" name="parentTypeId" value="" >
-                    <input readonly type="text" name="parentTypeName" value="" >
+                <div class="row-input required" >
+                    <input  type="text" name="goodsName" value="" data-rule="required" >
                 </div>
                 <label class="row-label">商品编号</label>
-                <div class="row-input required">
-                    <input type="text" name="typeCode" value="" data-rule="required">
+                <div class="row-input">
+                    <input type="text" name="goodsCode" value="" >
                 </div>
                 <label class="row-label">零售价</label>
-                <div class="row-input required">
-                    <input type="text" name="typeName" value="" data-rule="required" >
+                <div class="row-input">
+                    <input type="text" name="retailPrice"   data-rule="number" >
                 </div>
                 <label class="row-label">成本价</label>
                 <div class="row-input ">
-                    <input type="text" name="seq" value="" data-rule="digits" >
+                    <input type="text" name="costPrice" value=""   data-rule="number" >
                 </div>
                 <label class="row-label">计量单位</label>
                 <div class="row-input ">
-                    <input type="text" name="seq" value="" data-rule="digits" >
+                    <input type="text" name="units" value=""  >
                 </div>
                 <label class="row-label">规格</label>
                 <div class="row-input ">
-                    <input type="text" name="seq" value="" data-rule="digits" >
+                    <input type="text" name="specification" value=""  >
                 </div>
 
                 <label class="row-label">默认折扣</label>
                 <div class="row-input ">
-                    <input type="text" name="seq" value="" data-rule="digits" >
+                    <input type="text" name="defaultDiscount" value="" placeholder="例如:9折=0.9;95折=0.95" data-rule="defaultDiscount"
+                                                data-rule-defaultDiscount="[/^(0\.(?!0+$)\d{1,2}|1(\.0{1,2})?)$/, '请填写从0.00到1.00之间的小数']" >
                 </div>
 
                 <label class="row-label">最低折扣</label>
                 <div class="row-input ">
-                    <input type="text" name="seq" value="" data-rule="digits" >
+                    <input type="text" name="lowestDiscount" value=""  placeholder="例如:9折=0.9;95折=0.95" data-rule="lowestDiscount"
+                                                 data-rule-lowestDiscount="[/^(0\.(?!0+$)\d{1,2}|1(\.0{1,2})?)$/, '请填写从0.00到1.00之间的小数']">
                 </div>
 
                 <label class="row-label">库存数量</label>
                 <div class="row-input ">
-                    <input type="text" name="seq" value="" data-rule="digits" >
+                    <input type="text" name="inventoryNum" value="" data-rule="number"  >
                 </div>
 
                 <label class="row-label">是否热销</label>
-                <div class="row-input required">
-                    <select name="enable" data-toggle="selectpicker" data-rule="required" data-width="100%">
+                <div class="row-input">
+                    <select name="isHot" data-toggle="selectpicker"  data-width="100%">
                         <option value=""></option>
-                        <option selected value="hot">热销</option>
+                        <option value="hot">热销</option>
                         <option value="ordinary">一般</option>
                     </select>
                 </div>
                 <label class="row-label">是否打折</label>
-                <div class="row-input required">
-                    <select name="enable" data-toggle="selectpicker" data-rule="required" data-width="100%">
+                <div class="row-input">
+                    <select name="isDiscount" data-toggle="selectpicker"  data-width="100%">
                         <option value=""></option>
-                        <option selected value="Y">可打折</option>
-                        <option value="N">不打折</option>
+                        <option selected value="N">不打折</option>
+                        <option  value="Y">可打折</option>
                     </select>
                 </div>
                 <label class="row-label">是否有效</label>
                 <div class="row-input required">
-                    <select name="enable" data-toggle="selectpicker" data-rule="required" data-width="100%">
+                    <select name="enable" data-toggle="selectpicker" data-width="100%">
                         <option value=""></option>
                         <option selected value="Y">有效</option>
                         <option value="N">无效</option>
@@ -98,25 +108,39 @@
 
 <script>
 
-    var GoodsManage;
+    var Goods;
 
     $(function (){
 
         var ctx = GlobalConfig.ctx;
 
 
-        GoodsManage =  {
+        Goods =  {
 
             config : {
                 formId: "#Goods_form"
+            },
+
+            init:function () {
+                var goodsId = $("#goodsId").val();
+                if(goodsId){
+                    BJUI.ajax('doajax', {
+                        url:  ctx + '/goods/get/' + goodsId,
+                        loadingmask: true,
+                        okCallback: function(data, options) {
+                            setNativeform(Goods.config.formId,data);
+                        }
+                    })
+                }
             }
         }
+
 
 
         var formController = {
 
             add :function () {
-                clearForm(GoodsType.config.formId);
+                clearForm(Goods.config.formId);
             },
 
 
@@ -124,71 +148,38 @@
                 BJUI.ajax('ajaxform', {
                     url: ctx + '/goods/save',
                     type:"post",
-                    form: $.CurrentNavtab.find("#j_custom_form"),
+                    form: $("#Goods_form"),
                     validate: true,
                     loadingmask: true,
                     okCallback: function(json, options) {
-                        var data = json.data;
-                        var typeId = $.CurrentNavtab.find("input[name='typeId']").val();
-                        setform(GoodsType.config.formId,data);
-                        if(typeId){
-                            var nodes = zTree.getSelectedNodes()[0];
-                            for(var a in data){
-                                nodes[a] = data[a];
-                            }
-                            zTree.updateNode(nodes);
-                        }else{
-                            var parentZNode = zTree.getNodeByParam("typeId", data.parentTypeId, null);
-                            zTree.addNodes(parentZNode ,data, true);
-                            var node = zTree.getNodeByTId(data.typeId);
-                            zTree.selectNode(node);
-                        }
+
                     }
                 });
             },
 
             del:function () {
-                var nodes = zTree.getSelectedNodes()[0];
-                if(nodes){
+                var goodsId = $("#goodsId").val();
+                if(goodsId){
                     BJUI.alertmsg('confirm', '确认删除？', {
                         okCall: function() {
                             BJUI.ajax('doajax', {
-                                url: ctx + "/goods/del/"+nodes.typeId,
+                                url: ctx + "/goods/del/"+goodsId,
                                 okCallback: function(json, options) {
-                                    if(json.status==0){
-                                        zTree.removeNode(nodes);
-                                    }
+
                                 }
                             })
                         }
-                    })
-                }else{
-                    BJUI.alertmsg('warn', '请选择删除的信息！',{autoClose:true});
+                    });
                 }
             }
 
         }
 
-
-        GoodsManage.formController = formController;
-
-        $.ajax({
-            type: 'post',
-            url: ctx +'/goods/getTypes',
-            success: function (result) {
-                if(status==0){
-                    var t = $("#goodsType");
-                    $.fn.zTree.init(t, GoodsType.setting,result.data);
-                }
-                zTree = $.fn.zTree.getZTreeObj("goodsType");
-            },
-            error: function (msg) {
-                alert(" 数据加载失败！" + msg);
-            }
-        });
+        Goods.formController = formController;
 
 
     });
 
+    Goods.init();
 
 </script>

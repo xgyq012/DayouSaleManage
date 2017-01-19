@@ -128,7 +128,7 @@
                             url:  ctx + '/resource/get/' + id,
                             loadingmask: true,
                             okCallback: function(data, options) {
-                                setform(ResourceManage.config.formId,data);
+                                setNavtabform(ResourceManage.config.formId,data);
                                 var parentNode =  treeNode.getParentNode()
                                 if(parentNode){
                                     $.CurrentNavtab.find("input[name='parentResourceName']").val(parentNode.resourceName);//获取父节点名称
@@ -144,7 +144,7 @@
         formController = {
 
             add :function () {
-                clearForm(config.formId);
+                clearForm(ResourceManage.config.formId);
                 var nodes = zTree.getSelectedNodes()[0];
                 if(nodes){
                     $.CurrentNavtab.find("input[name='parentResourceId']").val(nodes.parentResourceId);
@@ -157,7 +157,7 @@
 
             //新增下级
             addNext :function () {
-                clearForm(config.formId);
+                clearForm(ResourceManage.config.formId);
                 var nodes = zTree.getSelectedNodes()[0];
                 if(nodes){
                     $.CurrentNavtab.find("input[name='parentResourceId']").val(nodes.id);
@@ -177,7 +177,7 @@
                     okCallback: function(json, options) {
                         var data = json.data;
                         var id = $.CurrentNavtab.find("input[name='id']").val();
-                        setform(GoodsType.config.formId,data);
+                        setNavtabform(ResourceManage.config.formId,data);
                         if(id){
                             var nodes = zTree.getSelectedNodes()[0];
                             for(var a in data){

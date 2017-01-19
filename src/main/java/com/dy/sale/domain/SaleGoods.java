@@ -20,7 +20,7 @@ public class SaleGoods extends BaseEntity {
      */
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "GOODS_ID")
     private String goodsId;
 
